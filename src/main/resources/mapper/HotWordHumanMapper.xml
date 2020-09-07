@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manhattan.java.minproject.service.admin.dao.HotWordHumanDao">
+    <resultMap id="BaseResultMap" type="com.manhattan.java.minproject.service.admin.entity.HotWordHuman">
+        <id column="id" property="id" />
+        <id column="hot_word" property="hotWord" />
+        <id column="order" property="order" />
+        <id column="create_id" property="createId" />
+        <id column="create_name" property="createName" />
+        <id column="create_time" property="createTime" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, hot_word, order, create_id, create_name, create_time
+    </sql>
+
+    <select id="pageAll"
+            parameterType="com.manhattan.java.minproject.service.admin.dto.HotWordHumanPageDTO"
+            resultType="com.manhattan.java.minproject.service.admin.vo.HotWordHumanVO">
+        select * from hot_word_human t
+        where 1=1
+        <if test="param.hotWord != null and '' != param.hotWord">
+            AND t.`hot_word` = #{param.hotWord}
+        </if>
+        <if test="param.order != null ">
+            AND t.`order` = #{param.order}
+        </if>
+    </select>
+
+</mapper>
