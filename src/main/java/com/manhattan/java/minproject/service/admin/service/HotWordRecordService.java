@@ -15,9 +15,9 @@ import com.manhattan.java.minproject.service.admin.entity.HotWordRecord;
  * <p>自定义service写在这里</p>
  *
  * <p>说明： 热词搜索记录表服务层</P>
+ *
  * @version: V1.0
  * @author: <a href=1604148881@qq.com>庄学南</a>
- *
  */
 public interface HotWordRecordService extends IService<HotWordRecord> {
 

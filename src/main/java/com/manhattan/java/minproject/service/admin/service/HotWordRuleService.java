@@ -15,9 +15,9 @@ import com.manhattan.java.minproject.service.admin.entity.HotWordRule;
  * <p>自定义service写在这里</p>
  *
  * <p>说明： 热词规则表服务层</P>
+ *
  * @version: V1.0
  * @author: <a href=1604148881@qq.com>庄学南</a>
- *
  */
 public interface HotWordRuleService extends IService<HotWordRule> {
 

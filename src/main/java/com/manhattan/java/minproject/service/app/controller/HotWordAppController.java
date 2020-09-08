@@ -26,9 +26,9 @@ import java.util.List;
  * <p>自定义方法写在这里</p>
  *
  * <p>说明： 热词APP接口层</P>
+ *
  * @version: V1.0
  * @author: <a href=1604148881@qq.com>庄学南</a>
- *
  */
 @Api(description = "热词APP接口层", value = "热词APP接口层")
 @RestController

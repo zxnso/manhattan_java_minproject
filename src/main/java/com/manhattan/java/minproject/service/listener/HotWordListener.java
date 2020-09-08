@@ -2,23 +2,17 @@ package com.manhattan.java.minproject.service.listener;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.manhattan.java.minproject.common.util.SpringContextUtil;
-import com.manhattan.java.minproject.service.admin.dao.HotWordHumanDao;
 import com.manhattan.java.minproject.service.admin.dao.HotWordRuleDao;
-import com.manhattan.java.minproject.service.admin.entity.HotWordHuman;
 import com.manhattan.java.minproject.service.admin.entity.HotWordRule;
-import com.manhattan.java.minproject.service.admin.service.HotWordHumanService;
 import com.manhattan.java.minproject.service.admin.service.impl.HotWordHumanServiceImpl;
 import com.manhattan.java.minproject.service.app.controller.HotWordAppController;
 import com.manhattan.java.minproject.service.app.dao.HotWordShowDao;
 import com.manhattan.java.minproject.service.app.entity.HotWordShow;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 
-import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
