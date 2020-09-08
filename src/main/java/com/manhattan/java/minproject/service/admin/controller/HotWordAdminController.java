@@ -107,7 +107,7 @@ public class HotWordAdminController {
         return hotWordHumanService.updateteHotWordHuman(hotWordHumanAddDTO);
     }
 
-    @DeleteMapping("/deleteteHotWordHuman")
+    @PostMapping("/deleteteHotWordHuman")
     @ApiOperation(value = "删除人工热词", notes = "作者：<a href=1604148881@qq.com.com>庄学南</a>")
     public JsonResult deleteteHotWordHuman(@Valid @RequestBody HotWordHumanDTO hotWordHumanDTO) {
         log.info("【删除人工热词】{},请求参数：{}", "接口请求", hotWordHumanDTO);
@@ -125,6 +125,7 @@ public class HotWordAdminController {
      * @return
      */
     @Scheduled(cron = "0 0 * * * ?")
+    @ApiOperation(value = "统计热词定时器", notes = "作者：<a href=1604148881@qq.com.com>庄学南</a>")
     @PostMapping(value = "/scheduleHotWord")
     void scheduleHotWord() {
 
