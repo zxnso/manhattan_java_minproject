@@ -60,6 +60,7 @@ public class HotWordListener implements ApplicationListener<ApplicationReadyEven
         }
 
         Integer refreshCycle = hotWordRule.getRefreshCycle();
+        Integer hotNum = hotWordRule.getHotNum();
 
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime beforeTime = now.withHour(refreshCycle);
@@ -69,9 +70,11 @@ public class HotWordListener implements ApplicationListener<ApplicationReadyEven
         List<HotWordShow> list = hotWordShowDao.selectList(new QueryWrapper<HotWordShow>()
                 .lambda().eq(HotWordShow::getTimeQuantum, beforeTimeLong));
         if (!list.isEmpty()) {
-            list.forEach(hotWordShow -> {
-                HotWordAppController.hotWordList.add(hotWordShow.getHotWord());
-            });
+            for (int i = 0; i < hotNum; i++) {
+                if (list.size() > i) {
+                    HotWordAppController.hotWordList.add(list.get(i).getHotWord());
+                }
+            }
         } else {
             hotWordHumanService.scheduleHotWord();
         }
