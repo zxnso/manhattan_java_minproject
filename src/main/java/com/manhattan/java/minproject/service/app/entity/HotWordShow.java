@@ -34,8 +34,8 @@ public class HotWordShow implements Serializable {
     private Integer searchNum;
     @ApiModelProperty(name = "timeQuantum", value = "时间段")
     private Long timeQuantum;
-    @ApiModelProperty(name = "order", value = "顺序")
-    private Integer order;
+    @ApiModelProperty(name = "sequence", value = "顺序")
+    private Integer sequence;
     @ApiModelProperty(name = "createTime", value = "创建时间")
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
@@ -52,11 +52,11 @@ public class HotWordShow implements Serializable {
     @TableField(exist = false)
     @JSONField(serialize = false, format = "yyyy-MM-dd HH:mm:ss")
     private Date createTimeEnd;
-    @ApiModelProperty(name = "paramAsc", value = "升序参数：id、hotWord、searchNum、timeQuantum、order、createTime、")
+    @ApiModelProperty(name = "paramAsc", value = "升序参数：id、hotWord、searchNum、timeQuantum、sequence、createTime、")
     @JSONField(serialize = false)
     @TableField(exist = false)
     private String[] paramAsc;
-    @ApiModelProperty(name = "paramDesc", value = "降序参数：id、hotWord、searchNum、timeQuantum、order、createTime、")
+    @ApiModelProperty(name = "paramDesc", value = "降序参数：id、hotWord、searchNum、timeQuantum、sequence、createTime、")
     @JSONField(serialize = false)
     @TableField(exist = false)
     private String[] paramDesc;

@@ -30,7 +30,7 @@
         </if>
     </select>
 
-    <select id="getNum">
+    <select id="getNum" resultType="int">
         SELECT
         count(id)
         FROM

@@ -6,6 +6,7 @@
  */
 package com.manhattan.java.minproject.service.app.controller;
 
+import com.google.common.collect.Lists;
 import com.manhattan.java.minproject.common.result.JsonResult;
 import com.manhattan.java.minproject.service.admin.dto.HotWordRecordAddDTO;
 import com.manhattan.java.minproject.service.admin.service.HotWordRecordService;
@@ -19,8 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 /**
  * <p>自定义方法写在这里</p>
@@ -36,22 +36,23 @@ import java.util.Map;
 @Slf4j
 public class HotWordAppController {
 
-    public static Map<Integer, String> hotWordMap = new HashMap<>();
+    public static List<String> hotWordList = Lists.newArrayList();
 
     @Autowired
     HotWordRecordService hotWordRecordService;
 
     static {
-        if (hotWordMap.isEmpty()) {
-            hotWordMap.put(1, "默认值");
-        }
+        /*if (hotWordList.isEmpty()) {
+            hotWordList.add("默认值1");
+            hotWordList.add("默认值2");
+        }*/
     }
 
     @PostMapping("/getHotWord")
     @ApiOperation(value = "获取热词", notes = "作者：<a href=1604148881@qq.com.com>庄学南</a>")
     public JsonResult getHotWord() {
         log.info("【获取热词】{},请求参数：{}", "接口请求", null);
-        return new JsonResult().success(hotWordMap);
+        return new JsonResult().success(hotWordList);
     }
 
     @PostMapping("/selectHotWord")

@@ -6,10 +6,10 @@
         <id column="hot_word" property="hotWord" />
         <id column="search_num" property="searchNum" />
         <id column="time_quantum" property="timeQuantum" />
-        <id column="order" property="order" />
+        <id column="sequence" property="sequence" />
         <id column="create_time" property="createTime" />
     </resultMap>
     <sql id="Base_Column_List">
-        id, hot_word, search_num, time_quantum, order, create_time
+        id, hot_word, search_num, time_quantum, sequence, create_time
     </sql>
 </mapper>

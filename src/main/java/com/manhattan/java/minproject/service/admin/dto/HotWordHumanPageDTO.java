@@ -22,8 +22,8 @@ public class HotWordHumanPageDTO implements Serializable {
 
     @ApiModelProperty(name = "hotWord", value = "热词")
     private String hotWord;
-    @ApiModelProperty(name = "order", value = "顺序")
-    private Integer order;
+    @ApiModelProperty(name = "sequence", value = "顺序")
+    private Integer sequence;
 
 
 }

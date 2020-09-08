@@ -30,8 +30,8 @@ public class HotWordHumanVO implements Serializable {
     private Long id;
     @ApiModelProperty(name = "hotWord", value = "热词")
     private String hotWord;
-    @ApiModelProperty(name = "order", value = "顺序")
-    private Integer order;
+    @ApiModelProperty(name = "sequence", value = "顺序")
+    private Integer sequence;
     @ApiModelProperty(name = "createId", value = "创建人ID")
     private Long createId;
     @ApiModelProperty(name = "createName", value = "创建人")

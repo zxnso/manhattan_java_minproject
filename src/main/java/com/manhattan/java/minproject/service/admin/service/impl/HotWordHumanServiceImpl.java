@@ -59,10 +59,21 @@ public class HotWordHumanServiceImpl extends ServiceImpl<HotWordHumanDao, HotWor
     @Transactional(rollbackFor = Exception.class)
     public JsonResult addHotWordHuman(HotWordHumanDTO hotWordHumanDTO) {
 
-        HotWordHuman hotWordHuman = new HotWordHuman();
-        hotWordHuman.setHotWord(hotWordHumanDTO.getHotWord());
-        hotWordHuman.setOrder(hotWordHumanDTO.getOrder());
-        baseMapper.insert(hotWordHuman);
+        HotWordHuman hotWordHuman1 = baseMapper.selectOne(new QueryWrapper<HotWordHuman>()
+                .lambda().eq(HotWordHuman::getHotWord, hotWordHumanDTO.getHotWord())
+                .or()
+                .eq(HotWordHuman::getSequence, hotWordHumanDTO.getSequence()));
+        if (hotWordHuman1!=null){
+            hotWordHuman1.setSequence(hotWordHumanDTO.getSequence());
+            hotWordHuman1.setHotWord(hotWordHumanDTO.getHotWord());
+            baseMapper.updateById(hotWordHuman1);
+        }else {
+            HotWordHuman hotWordHuman = new HotWordHuman();
+            hotWordHuman.setHotWord(hotWordHumanDTO.getHotWord());
+            hotWordHuman.setSequence(hotWordHumanDTO.getSequence());
+            hotWordHuman.setCreateTime(new Date());
+            baseMapper.insert(hotWordHuman);
+        }
 
         scheduleHotWord();
         return new JsonResult().success("添加成功!");
@@ -76,7 +87,7 @@ public class HotWordHumanServiceImpl extends ServiceImpl<HotWordHumanDao, HotWor
         hotWordHumanAddDTO.getHotWordHumanDTOList().forEach(hotWordHumanDTO -> {
             HotWordHuman hotWordHuman = new HotWordHuman();
             hotWordHuman.setHotWord(hotWordHumanDTO.getHotWord());
-            hotWordHuman.setOrder(hotWordHumanDTO.getOrder());
+            hotWordHuman.setSequence(hotWordHumanDTO.getSequence());
             list.add(hotWordHuman);
         });
         this.saveBatch(list);
@@ -150,25 +161,49 @@ public class HotWordHumanServiceImpl extends ServiceImpl<HotWordHumanDao, HotWor
                 }
             }
 
-            hotWordHumanList.stream().sorted(Comparator.comparing(HotWordHuman::getOrder)).collect(Collectors.toList());
+            hotWordHumanList.stream().sorted(Comparator.comparing(HotWordHuman::getSequence)).collect(Collectors.toList());
 
-            for (int i = 0; i < hotWordHumanList.size(); i++) {
-                if (null != hotWordRecordList.get(hotWordHumanList.get(i).getOrder() - 1)) {
-                    HotWordRecord hotWordRecord = new HotWordRecord();
-                    hotWordRecord.setHotWord(hotWordHumanList.get(i).getHotWord());
-                    hotWordRecordList.set(hotWordHumanList.get(i).getOrder() - 1, hotWordRecord);
-                } else {
-                    HotWordRecord hotWordRecord = new HotWordRecord();
-                    hotWordRecord.setHotWord(hotWordHumanList.get(i).getHotWord());
-                    hotWordRecordList.set(hotWordHumanList.size(), hotWordRecord);
+            List<HotWordRecord> list = Lists.newArrayList();
+            for (int i = 0; i < hotNum; i++) {
+
+                for (int j = 0; j < hotWordHumanList.size(); j++) {
+                    if (hotWordRecordList.isEmpty()) {
+                        HotWordRecord hotWordRecord = new HotWordRecord();
+                        hotWordRecord.setHotWord(hotWordHumanList.get(j).getHotWord());
+                        list.add(hotWordRecord);
+                        hotWordHumanList.remove(j);
+                    } else if (hotWordHumanList.get(j).getSequence().intValue() == i + 1) {
+                        HotWordRecord hotWordRecord = new HotWordRecord();
+                        hotWordRecord.setHotWord(hotWordHumanList.get(j).getHotWord());
+                        list.add(hotWordRecord);
+                        hotWordHumanList.remove(j);
+                    }
+                }
+                if (list.size() == i) {
+                    if (!hotWordRecordList.isEmpty()) {
+                        list.add(hotWordRecordList.get(0));
+                        hotWordRecordList.remove(0);
+                    }
+                }
+
+            }
+
+
+            if (list.size() > hotNum.intValue()) {
+                for (int i = 0; i < list.size() - hotNum.intValue(); i++) {
+                    list.remove(hotNum);
+                }
+            }
+            if (!hotWordRecordList.isEmpty()) {
+                for (int i = 0; i < hotWordRecordList.size(); i++) {
+                    hotWordRecordList.remove(0);
                 }
             }
 
-            if (hotWordRecordList.size() > hotNum.intValue()) {
-                for (int i = 0; i < hotWordRecordList.size() - hotNum.intValue(); i++) {
-                    hotWordRecordList.remove(hotNum);
-                }
-            }
+            list.forEach(hotWordRecord -> {
+                hotWordRecordList.add(hotWordRecord);
+            });
+
         }
     }
 
@@ -179,7 +214,7 @@ public class HotWordHumanServiceImpl extends ServiceImpl<HotWordHumanDao, HotWor
             HotWordShow hotWordShow = new HotWordShow();
             hotWordShow.setCreateTime(new Date());
             hotWordShow.setHotWord(hotWordRecordList.get(i).getHotWord());
-            hotWordShow.setOrder(i + 1);
+            hotWordShow.setSequence(i + 1);
             hotWordShow.setSearchNum(hotWordRecordList.get(i).getSearchNum());
             hotWordShow.setTimeQuantum(afterTimeLong);
             list.add(hotWordShow);
@@ -192,7 +227,8 @@ public class HotWordHumanServiceImpl extends ServiceImpl<HotWordHumanDao, HotWor
     private void setHotWordMap(List<HotWordRecord> hotWordRecordList) {
 
         for (int i = 0; i < hotWordRecordList.size(); i++) {
-            HotWordAppController.hotWordMap.put(i + 1, hotWordRecordList.get(i).getHotWord());
+            HotWordAppController.hotWordList.add(hotWordRecordList.get(i).getHotWord());
+//            HotWordAppController.hotWordMap.put(i + 1, hotWordRecordList.get(i).getHotWord());
         }
 
     }

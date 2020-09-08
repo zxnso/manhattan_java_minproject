@@ -23,9 +23,9 @@ public class HotWordHumanDTO implements Serializable {
     @ApiModelProperty(name = "hotWord", value = "热词")
     @NotBlank(message = "热词不能为空")
     private String hotWord;
-    @ApiModelProperty(name = "order", value = "顺序")
+    @ApiModelProperty(name = "sequence", value = "顺序")
     @NotNull(message = "顺序不能为空!")
-    private Integer order;
+    private Integer sequence;
 
     @ApiModelProperty(name = "idBatch", value = "批量主键处理")
     private List<Long> idBatch;
