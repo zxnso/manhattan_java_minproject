@@ -58,21 +58,27 @@ public class HotWordHumanServiceImpl extends ServiceImpl<HotWordHumanDao, HotWor
     @Override
     @Transactional(rollbackFor = Exception.class)
     public JsonResult addHotWordHuman(HotWordHumanDTO hotWordHumanDTO) {
-
         HotWordHuman hotWordHuman1 = baseMapper.selectOne(new QueryWrapper<HotWordHuman>()
-                .lambda().eq(HotWordHuman::getHotWord, hotWordHumanDTO.getHotWord())
-                .or()
-                .eq(HotWordHuman::getSequence, hotWordHumanDTO.getSequence()));
-        if (hotWordHuman1!=null){
+                .lambda().eq(HotWordHuman::getHotWord, hotWordHumanDTO.getHotWord()));
+
+        if (hotWordHuman1 != null) {
             hotWordHuman1.setSequence(hotWordHumanDTO.getSequence());
             hotWordHuman1.setHotWord(hotWordHumanDTO.getHotWord());
             baseMapper.updateById(hotWordHuman1);
-        }else {
-            HotWordHuman hotWordHuman = new HotWordHuman();
-            hotWordHuman.setHotWord(hotWordHumanDTO.getHotWord());
-            hotWordHuman.setSequence(hotWordHumanDTO.getSequence());
-            hotWordHuman.setCreateTime(new Date());
-            baseMapper.insert(hotWordHuman);
+        } else {
+            HotWordHuman hotWordHuman2 = baseMapper.selectOne(new QueryWrapper<HotWordHuman>()
+                    .lambda().eq(HotWordHuman::getSequence, hotWordHumanDTO.getSequence()));
+            if (hotWordHuman2 != null) {
+                hotWordHuman2.setSequence(hotWordHumanDTO.getSequence());
+                hotWordHuman2.setHotWord(hotWordHumanDTO.getHotWord());
+                baseMapper.updateById(hotWordHuman2);
+            } else {
+                HotWordHuman hotWordHuman = new HotWordHuman();
+                hotWordHuman.setHotWord(hotWordHumanDTO.getHotWord());
+                hotWordHuman.setSequence(hotWordHumanDTO.getSequence());
+                hotWordHuman.setCreateTime(new Date());
+                baseMapper.insert(hotWordHuman);
+            }
         }
 
         scheduleHotWord();
