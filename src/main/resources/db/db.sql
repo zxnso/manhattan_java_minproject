@@ -46,15 +46,16 @@ INSERT INTO `hot_word_human` VALUES (11, '777', 1, NULL, NULL, '2020-09-08 23:26
 -- Table structure for hot_word_record
 -- ----------------------------
 DROP TABLE IF EXISTS `hot_word_record`;
-CREATE TABLE `hot_word_record`  (
+CREATE TABLE `hot_word_record` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `hot_word` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '热词',
-  `search_num` tinyint(8) NOT NULL DEFAULT 0 COMMENT '次数',
+  `hot_word` varchar(100) NOT NULL COMMENT '热词',
+  `search_num` tinyint(8) NOT NULL DEFAULT '0' COMMENT '次数',
   `time_quantum` bigint(10) NOT NULL COMMENT '时间段',
   `create_time` datetime NOT NULL COMMENT '插入时间',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '热词搜索记录表' ROW_FORMAT = Compact;
-
+  PRIMARY KEY (`id`),
+  KEY `hot_word` (`hot_word`),
+  KEY `search_num` (`search_num`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='热词搜索记录表';
 -- ----------------------------
 -- Records of hot_word_record
 -- ----------------------------
