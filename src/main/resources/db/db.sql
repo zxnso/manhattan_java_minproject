@@ -54,8 +54,10 @@ CREATE TABLE `hot_word_record` (
   `create_time` datetime NOT NULL COMMENT '插入时间',
   PRIMARY KEY (`id`),
   KEY `hot_word` (`hot_word`),
-  KEY `search_num` (`search_num`)
+  KEY `search_num` (`search_num`),
+  KEY `time_quantum` (`time_quantum`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='热词搜索记录表';
+
 -- ----------------------------
 -- Records of hot_word_record
 -- ----------------------------
